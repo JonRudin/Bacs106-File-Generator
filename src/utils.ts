@@ -35,18 +35,18 @@ export default class BACS106FileGenerator {
 
         // Generate 100 rows of collection data (placeholder values)
         for (let i = 0; i < 100; i++) {
-            const destinationSortCode = '123456';
-            const destinationAccountNumber = '123456789';
+            const destinationSortCode = chance.integer({ min: 0o00000, max: 999999 }).toString();
+            const destinationAccountNumber = chance.integer({ min: 0o0000000, max: 99999999 }).toString();
             const destinationAccountType = '0'
-            const bacsCode = bacsCollectionCodes[Math.floor(Math.random() * bacsCollectionCodes.length)];;
-            const debitSortCode = '000000'
-            const debitAccountNumber ='00000000'
-            const freeFormatText = 'TES'
+            const bacsCode = bacsCollectionCodes[Math.floor(Math.random() * bacsCollectionCodes.length)];
+            const debitSortCode = chance.integer({ min: 0o00000, max: 999999 }).toString()
+            const debitAccountNumber = chance.integer({ min: 0o0000000, max: 99999999 }).toString();
+            const freeFormatText = chance.string({ length: 4, casing: 'upper', alpha: true, numeric: true, symbols: false });
             const amount = chance.integer({ min: 1, max: 99999999999 }).toString();
-            const originatorName = 'TES'
+            const originatorName = chance.string({ length: 18, casing: 'upper', alpha: true, numeric: true, symbols: false });
             const paymentReference = `OHS-${i + 1}`;
-            const destinationAccountName = chance.name()
-            const processingDate = '010101'
+            const destinationAccountName = chance.name().substring(0, 18)
+            const processingDate = '230701'
             rows.push({ destinationSortCode, destinationAccountNumber, destinationAccountType, bacsCode, debitSortCode, debitAccountNumber, freeFormatText, amount, originatorName, paymentReference, destinationAccountName, processingDate});
         }
 
